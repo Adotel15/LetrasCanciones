@@ -1,13 +1,32 @@
 
 import { useState, createContext } from "react";
+import axios from "axios";
 
 const LetrasContext = createContext()
 
 const LetrasProvider = ({ children }) => {
 
+    const [alerta, setAlerta] = useState('')
+
+    const busquedaLetra = async busqueda => {
+        try {
+            const { artista, cancion } = busqueda
+            const url = `https://api.lyrics.ovh/v1/${artista}/${cancion}`
+
+            const resultado = await axios(url)
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <LetrasContext.Provider
-            value = {{}}
+            value = {{
+                alerta,
+                setAlerta,
+                busquedaLetra
+            }}
         >
             { children }
         </LetrasContext.Provider>
